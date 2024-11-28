@@ -8,7 +8,7 @@ class Report {
     emergencyInfo,
     location,
     pictureLink = "",
-    comments = "",
+    comments = ""
   ) {
     this.name = name;
     this.phone = phone;
@@ -17,6 +17,11 @@ class Report {
     this.pictureLink = pictureLink;
     this.comments = comments;
     this.status = "OPEN";
+    this.time = new Date().toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
   }
 }
 
@@ -51,7 +56,7 @@ function ReportForm({ addReport }) {
       formData.emergencyInfo,
       formData.location,
       formData.pictureLink,
-      formData.comments,
+      formData.comments
     );
 
     // Retrieve existing contacts from local storage, or initialize with an empty array
@@ -79,68 +84,68 @@ function ReportForm({ addReport }) {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="name">Name:</label>
+        <label htmlFor='name'>Name:</label>
         <input
-          type="text"
-          id="name"
-          name="name"
+          type='text'
+          id='name'
+          name='name'
           value={formData.name}
           onChange={handleChange}
           required
         />
       </div>
       <div>
-        <label htmlFor="phone">Phone Number:</label>
+        <label htmlFor='phone'>Phone Number:</label>
         <input
-          type="tel"
-          id="phone"
-          name="phone"
+          type='tel'
+          id='phone'
+          name='phone'
           value={formData.phone}
           onChange={handleChange}
           required
         />
       </div>
       <div>
-        <label htmlFor="emergencyInfo">Emergency Info:</label>
+        <label htmlFor='emergencyInfo'>Emergency Info:</label>
         <textarea
-          id="emergencyInfo"
-          name="emergencyInfo"
+          id='emergencyInfo'
+          name='emergencyInfo'
           value={formData.emergencyInfo}
           onChange={handleChange}
           required
         />
       </div>
       <div>
-        <label htmlFor="location">Location:</label>
+        <label htmlFor='location'>Location:</label>
         <input
-          type="text"
-          id="location"
-          name="location"
+          type='text'
+          id='location'
+          name='location'
           value={formData.location}
           onChange={handleChange}
           required
         />
       </div>
       <div>
-        <label htmlFor="pictureLink">Picture Link (optional):</label>
+        <label htmlFor='pictureLink'>Picture Link (optional):</label>
         <input
-          type="url"
-          id="pictureLink"
-          name="pictureLink"
+          type='url'
+          id='pictureLink'
+          name='pictureLink'
           value={formData.pictureLink}
           onChange={handleChange}
         />
       </div>
       <div>
-        <label htmlFor="comments">Comments (optional):</label>
+        <label htmlFor='comments'>Comments (optional):</label>
         <textarea
-          id="comments"
-          name="comments"
+          id='comments'
+          name='comments'
           value={formData.comments}
           onChange={handleChange}
         />
       </div>
-      <button type="submit">Submit</button>
+      <button type='submit'>Submit</button>
     </form>
   );
 }
