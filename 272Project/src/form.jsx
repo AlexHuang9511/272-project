@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./form.css";
 
 // for each report
 class Report {
