@@ -85,71 +85,77 @@ function ReportForm({ addReport }) {
         <div className="modal-overlay">
           <div className="modal-content">
             <h2>Create a New Report</h2>
-            <form onSubmit={handleSubmit}>
+            <form id="report-form" onSubmit={handleSubmit}>
               <div>
-                <label htmlFor="name">Name:</label>
                 <input
                   type="text"
                   id="name"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
+                  placeholder="Full name"
                   required
                 />
+                <label htmlFor="name">Name </label>
               </div>
               <div>
-                <label htmlFor="phone">Phone Number:</label>
                 <input
                   type="tel"
                   id="phone"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
+                  placeholder="Phone"
                   required
                 />
+                <label htmlFor="phone">Phone Number </label>
               </div>
               <div>
-                <label htmlFor="emergencyInfo">Emergency Info:</label>
-                <textarea
+                <input
                   id="emergencyInfo"
                   name="emergencyInfo"
                   value={formData.emergencyInfo}
                   onChange={handleChange}
+                  placeholder="Emergency info"
                   required
                 />
+                <label className="textarea-placeholder" htmlFor="emergencyInfo">Emergency Info </label>
               </div>
               <div>
-                <label htmlFor="location">Location:</label>
                 <input
                   type="text"
                   id="location"
                   name="location"
                   value={formData.location}
                   onChange={handleChange}
+                  placeholder="Location of incident"
                   required
                 />
+                <label htmlFor="location">Location </label>
               </div>
               <div>
-                <label htmlFor="pictureLink">Picture Link (optional):</label>
                 <input
                   type="url"
                   id="pictureLink"
                   name="pictureLink"
                   value={formData.pictureLink}
+                  placeholder="Picture link (optional)"
                   onChange={handleChange}
                 />
+                <label htmlFor="pictureLink">Picture Link (optional) </label>
               </div>
               <div>
-                <label htmlFor="comments">Comments (optional):</label>
-                <textarea
+                <input
                   id="comments"
                   name="comments"
                   value={formData.comments}
                   onChange={handleChange}
+                  placeholder="Comments (optional)"
                 />
+                <label className="textarea-placeholder" htmlFor="comments">Comments (optional) </label>
               </div>
-              <button type="submit">Submit</button>
-              <button type="button" onClick={() => setIsModalOpen(false)}>
+              <button className="formbutton submit" type="submit">Submit</button>
+              <button className="formbutton cancel" type="button" onClick={() => setIsModalOpen(false)}>
                 Cancel
               </button>
             </form>
