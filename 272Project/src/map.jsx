@@ -62,6 +62,13 @@ const Map = ({ reports }) => {
                         `;
             newMarker.bindPopup(popupContent);
 
+            newMarker.on("mouseover", function () {
+              newMarker.openPopup();
+            });
+            newMarker.on("mouseout", function () {
+              newMarker.closePopup();
+            });
+
             markersRef.current.reportMarkers.push(newMarker);
           }
         }
@@ -83,13 +90,29 @@ const Map = ({ reports }) => {
       const data = await response.json();
 
       const addressParts = data.address;
-      const shortAddress = `${addressParts.road}, ${addressParts.city}`;
+      var shortAddress = " ";
+      if (!addressParts.house_number) {
+        if (!addressParts.road) {
+          shortAddress = `${addressParts.city}`;
+        } else {
+          shortAddress = `${addressParts.road}, ${addressParts.city}`;
+        }
+      } else {
+        shortAddress = `${addressParts.house_number} ${addressParts.road}, ${addressParts.city}`;
+      }
       setShortAddress(shortAddress);
 
       const newMarker = L.marker([lat, lng])
         .addTo(map)
-        .bindPopup(`You clicked at:<br>Address: ${shortAddress}`)
+        .bindPopup(`Address: ${shortAddress}`)
         .openPopup();
+
+      newMarker.on("mouseover", function () {
+        newMarker.openPopup();
+      });
+      newMarker.on("mouseout", function () {
+        newMarker.closePopup();
+      });
 
       markersRef.current.regularMarkers.push(newMarker);
     });
@@ -100,7 +123,6 @@ const Map = ({ reports }) => {
   }, [reports]);
 
   return (
-    <div>
       <div
         id='map'
         style={{
@@ -108,7 +130,6 @@ const Map = ({ reports }) => {
           width: "100%",
         }}
       ></div>
-    </div>
   );
 };
 
