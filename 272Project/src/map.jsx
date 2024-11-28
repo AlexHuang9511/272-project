@@ -38,14 +38,21 @@ const Map = ({ reports }) => {
     }).addTo(map);
 
     const addMarkersForReports = async () => {
-      markersRef.current.regularMarkers.forEach((marker) => marker.remove());
+      markersRef.current.reportMarkers.forEach((marker) => {
+      const markerData = marker.data;
+      if (!reports.find((report) => report.name === markerData.name)) {
+        marker.remove();
+      }
+    });
+    
+    markersRef.current.reportMarkers = [];
       markersRef.current.regularMarkers = [];
 
       if (!Array.isArray(reports)) return;
 
       for (let report of reports) {
         if (report.status === "OPEN") {
-          const { location, name, status, emergencyInfo } = report;
+          const { location, name, status, emergencyInfo, time } = report;
           const coordinates = await geocodeAddress(location);
 
           if (coordinates) {
@@ -58,7 +65,8 @@ const Map = ({ reports }) => {
                             <strong>${name}</strong><br>
                             <strong>Location:</strong> ${location}<br>
                             <strong>Status:</strong> ${status}<br>
-                            <strong>Emergency Info:</strong> ${emergencyInfo}
+                            <strong>Emergency Info:</strong> ${emergencyInfo}<br>
+                            <strong>Time Reported:</strong> ${time}
                         `;
             newMarker.bindPopup(popupContent);
 
