@@ -1,0 +1,20 @@
+#header-container {
+    display: flex;
+    background-color: #39f;
+    width: 100vw;
+    height: 100px;
+    flex-flow: row;
+    justify-content: start;
+    align-items: center;
+    flex-shrink: 1;
+}
+
+#vanlogo {
+    height: 20px;
+    margin-left: 50px;
+}
+
+/* .flex-container {
+    display: flex;
+    
+} */
