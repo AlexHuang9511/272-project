@@ -1,4 +1,4 @@
-function ReportList({ reports, onDelete }) {
+function ReportList({ reports, onDelete, onChangeStatus}) {
   return (
     <div>
       <h2>Report List</h2>
@@ -36,7 +36,10 @@ function ReportList({ reports, onDelete }) {
                 </p>
               )}
               <p>
-                <strong>Status:</strong> {report.status}
+                <strong>Status:</strong> {report.status} {" "}
+                <a onClick={(event)=>{
+                  event.preventDefault();
+                  onChangeStatus(index);}}>Change</a>
               </p>
               <button onClick={() => onDelete(index)}>Delete</button>
             </li>

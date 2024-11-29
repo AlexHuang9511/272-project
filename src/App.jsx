@@ -36,11 +36,29 @@ function App() {
     }
   };
 
+  // Edit status with password verification
+  const changeReportStatus = (index) => {
+    const getReports = [...reports];
+    if(getReports[index].status == "OPEN"){
+        const password = window.prompt("Enter the password to change Status of report to RESOLVED:");
+      if (password && md5(password).toString() === PASSWORD_HASH) {
+        getReports[index].status = "RESOLVED";
+        saveReports(getReports)
+        alert("Report status successfully changed to resolved.");
+      } else {
+        alert("Incorrect password. Change in status canceled.");
+      }
+    }
+    else{
+      const password = window.alert("This report is resolved and cannot be re-opened.\nPlease submit a new report.");
+    }
+  };
+
   return (
     <div>
       <h1>Emergency Report System</h1>
       <Form addReport={addReport} />
-      <ReportList reports={reports} onDelete={deleteReport} />
+      <ReportList reports={reports} onDelete={deleteReport} onChangeStatus={changeReportStatus} />
     </div>
   );
 }
