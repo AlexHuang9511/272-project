@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import "./map.css"; // Import the CSS file
 
 const Map = ({ reports }) => {
   const [clickedLocation, setClickedLocation] = useState(null);
@@ -39,13 +40,13 @@ const Map = ({ reports }) => {
 
     const addMarkersForReports = async () => {
       markersRef.current.reportMarkers.forEach((marker) => {
-      const markerData = marker.data;
-      if (!reports.find((report) => report.name === markerData.name)) {
-        marker.remove();
-      }
-    });
-    
-    markersRef.current.reportMarkers = [];
+        const markerData = marker.data;
+        if (!reports.find((report) => report.name === markerData.name)) {
+          marker.remove();
+        }
+      });
+
+      markersRef.current.reportMarkers = [];
       markersRef.current.regularMarkers = [];
 
       if (!Array.isArray(reports)) return;
@@ -110,17 +111,12 @@ const Map = ({ reports }) => {
       }
       setShortAddress(shortAddress);
 
+      const popupContent = `Address: ${shortAddress}<br>`;
+
       const newMarker = L.marker([lat, lng])
         .addTo(map)
-        .bindPopup(`Address: ${shortAddress}`)
+        .bindPopup(popupContent)
         .openPopup();
-
-      newMarker.on("mouseover", function () {
-        newMarker.openPopup();
-      });
-      newMarker.on("mouseout", function () {
-        newMarker.closePopup();
-      });
 
       markersRef.current.regularMarkers.push(newMarker);
     });
@@ -130,15 +126,7 @@ const Map = ({ reports }) => {
     };
   }, [reports]);
 
-  return (
-      <div
-        id='map'
-        style={{
-          height: "100vh",
-          width: "100%",
-        }}
-      ></div>
-  );
+  return <div id='map' className='map'></div>;
 };
 
 export default Map;
