@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Form from "./form.jsx";
 import ReportList from "./reportList.jsx";
 import "./App.css";
+import Header from "./Header.jsx";
 import Map from "./map.jsx";
 
 function App() {
@@ -21,8 +22,10 @@ function App() {
 
   return (
     <>
+      <Header />
       <h1>create new report</h1>
       <Form addReport={addReport} />
+      <br></br>
 
       <Map reports={reports} />
       <ReportList reports={reports} />

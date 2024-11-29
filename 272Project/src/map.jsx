@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import "./map.css"; // Import the CSS file
+import "./map.css";
+import Form from "./form.jsx";
 
 const Map = ({ reports }) => {
   const [clickedLocation, setClickedLocation] = useState(null);

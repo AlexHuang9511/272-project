@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./form.css";
 
 // for each report
 class Report {
@@ -26,7 +27,7 @@ class Report {
 }
 
 function ReportForm({ addReport }) {
-  // Initialize state for form inputs
+  // State for form data
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -35,6 +36,9 @@ function ReportForm({ addReport }) {
     pictureLink: "",
     comments: "",
   });
+
+  // State for modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Handle input changes
   const handleChange = (event) => {
@@ -49,7 +53,6 @@ function ReportForm({ addReport }) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // Create a new ContactInfo instance using form data
     const newReport = new Report(
       formData.name,
       formData.phone,
@@ -59,18 +62,13 @@ function ReportForm({ addReport }) {
       formData.comments
     );
 
-    // Retrieve existing contacts from local storage, or initialize with an empty array
     const existingReports = JSON.parse(localStorage.getItem("reports")) || [];
-
-    // Add the new contact to the list of contacts
     const updatedReports = [...existingReports, newReport];
 
-    // Save the updated contacts list back to local storage
     localStorage.setItem("reports", JSON.stringify(updatedReports));
-
     addReport(newReport);
 
-    // clear the form after submission
+    // Clear the form and close the modal
     setFormData({
       name: "",
       phone: "",
@@ -79,74 +77,97 @@ function ReportForm({ addReport }) {
       pictureLink: "",
       comments: "",
     });
+    setIsModalOpen(false);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor='name'>Name:</label>
-        <input
-          type='text'
-          id='name'
-          name='name'
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor='phone'>Phone Number:</label>
-        <input
-          type='tel'
-          id='phone'
-          name='phone'
-          value={formData.phone}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor='emergencyInfo'>Emergency Info:</label>
-        <textarea
-          id='emergencyInfo'
-          name='emergencyInfo'
-          value={formData.emergencyInfo}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor='location'>Location:</label>
-        <input
-          type='text'
-          id='location'
-          name='location'
-          value={formData.location}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor='pictureLink'>Picture Link (optional):</label>
-        <input
-          type='url'
-          id='pictureLink'
-          name='pictureLink'
-          value={formData.pictureLink}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label htmlFor='comments'>Comments (optional):</label>
-        <textarea
-          id='comments'
-          name='comments'
-          value={formData.comments}
-          onChange={handleChange}
-        />
-      </div>
-      <button type='submit'>Submit</button>
-    </form>
+    <>
+      {/* Button to open modal */}
+      <button onClick={() => setIsModalOpen(true)}>Create New Report</button>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Create a New Report</h2>
+            <form id="report-form" onSubmit={handleSubmit}>
+              <div>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Full name"
+                  required
+                />
+                <label htmlFor="name">Name </label>
+              </div>
+              <div>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="Phone"
+                  required
+                />
+                <label htmlFor="phone">Phone Number </label>
+              </div>
+              <div>
+                <input
+                  id="emergencyInfo"
+                  name="emergencyInfo"
+                  value={formData.emergencyInfo}
+                  onChange={handleChange}
+                  placeholder="Emergency info"
+                  required
+                />
+                <label className="textarea-placeholder" htmlFor="emergencyInfo">Emergency Info </label>
+              </div>
+              <div>
+                <input
+                  type="text"
+                  id="location"
+                  name="location"
+                  value={formData.location}
+                  onChange={handleChange}
+                  placeholder="Location of incident"
+                  required
+                />
+                <label htmlFor="location">Location </label>
+              </div>
+              <div>
+                <input
+                  type="url"
+                  id="pictureLink"
+                  name="pictureLink"
+                  value={formData.pictureLink}
+                  placeholder="Picture link (optional)"
+                  onChange={handleChange}
+                />
+                <label htmlFor="pictureLink">Picture Link (optional) </label>
+              </div>
+              <div>
+                <input
+                  id="comments"
+                  name="comments"
+                  value={formData.comments}
+                  onChange={handleChange}
+                  placeholder="Comments (optional)"
+                />
+                <label className="textarea-placeholder" htmlFor="comments">Comments (optional) </label>
+              </div>
+              <button className="formbutton submit" type="submit">Submit</button>
+              <button className="formbutton cancel" type="button" onClick={() => setIsModalOpen(false)}>
+                Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
