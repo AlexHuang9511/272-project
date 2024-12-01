@@ -9,6 +9,7 @@ import md5 from "crypto-js/md5";
 function App() {
   const PASSWORD_HASH = md5("1234").toString(); // Predefined hashed password
   const [reports, setReports] = useState([]);
+  const [reportFromMap, setReportsInMap] = useState([]);
 
   // Load saved reports from localStorage when the app initializes
   useEffect(() => {
@@ -61,8 +62,8 @@ function App() {
       <Header/>
       <h1>Emergency Report System</h1>
       <Form addReport={addReport} />
-      <Map reports={reports} />
-      <ReportList reports={reports} onDelete={deleteReport} onChangeStatus={changeReportStatus} />
+      <Map reports={reports} setReportsInMap = {setReportsInMap}/>
+      <ReportList reports={reportFromMap} onDelete={deleteReport} onChangeStatus={changeReportStatus} />
     </div>
   );
 }

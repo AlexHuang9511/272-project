@@ -3,13 +3,14 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "./map.css"; // Import the CSS file
 
-const Map = ({ reports }) => {
+const Map = ({ reports, setReportsInMap }) => {
   const [clickedLocation, setClickedLocation] = useState(null);
   const [shortAddress, setShortAddress] = useState("");
   const markersRef = useRef({
     reportMarkers: [],
     regularMarkers: [],
   });
+  const tempReports = [];
 
   const geocodeAddress = async (address) => {
     try {
@@ -39,10 +40,9 @@ const Map = ({ reports }) => {
     }).addTo(map);
 
     const addMarkersForReports = async () => {
-      console.log("Markers:", markersRef.current.reportMarkers);
       markersRef.current.reportMarkers.forEach((marker) => {
         const markerData = marker;
-        if (!reports.find((report) => report.name === markerData.options.title)) {
+        if (!reports.find((report) => report.name === markerData.data.name)) {
           marker.remove();
         }
       });
@@ -79,15 +79,62 @@ const Map = ({ reports }) => {
               newMarker.closePopup();
             });
             // Add to option title: name
-            newMarker.title = name;
+            newMarker.data = report;
             markersRef.current.reportMarkers.push(newMarker);
-            console.log("Markers loop:", markersRef.current.reportMarkers);
+
+            tempReports.push(report);
           }
         }
       }
+      // Filter visible reports
+      const bounds = map.getBounds();
+
+      // Go through markers again
+      const reportsCurrentlyVisible = tempReports.filter((report) => {
+        const validMarker = markersRef.current.reportMarkers.find((marker)=> marker.data.name === report.name);
+        // returns boolean for the report filter
+        console.log("valid marker: ", validMarker)
+        if (validMarker){
+          const validMarkerLatLng = validMarker.getLatLng();
+          return bounds.contains(validMarkerLatLng);
+        }
+        else{
+          return false;
+        }
+      });
+
+      console.log("REPORTS VISIBLE:", reportsCurrentlyVisible)
+      // Prop
+      setReportsInMap(reportsCurrentlyVisible);
     };
 
     addMarkersForReports();
+
+    const updateReportsInMap = () => {
+      // Filter visible reports
+      const bounds = map.getBounds();
+
+      // Go through markers again
+      const reportsCurrentlyVisible = tempReports.filter((report) => {
+        const validMarker = markersRef.current.reportMarkers.find((marker)=> marker.data.name === report.name);
+        // returns boolean for the report filter
+        console.log("valid marker: ", validMarker)
+        if (validMarker){
+          const validMarkerLatLng = validMarker.getLatLng();
+          return bounds.contains(validMarkerLatLng);
+        }
+        else{
+          return false;
+        }
+      });
+
+      console.log("REPORTS VISIBLE:", reportsCurrentlyVisible)
+      // Prop
+      setReportsInMap(reportsCurrentlyVisible);
+    };
+
+    // when Map is moved, update the ReportList to show reports in map
+    map.on("moveend", updateReportsInMap);
 
     map.on("click", async (e) => {
       const { lat, lng } = e.latlng;
