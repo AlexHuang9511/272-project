@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Form from "./form.jsx";
 import ReportList from "./reportList.jsx";
 import "./App.css";
+import Map from "./map.jsx";
 import Header from "./Header.jsx"
 import md5 from "crypto-js/md5";
 
@@ -60,6 +61,7 @@ function App() {
       <Header/>
       <h1>Emergency Report System</h1>
       <Form addReport={addReport} />
+      <Map reports={reports} />
       <ReportList reports={reports} onDelete={deleteReport} onChangeStatus={changeReportStatus} />
     </div>
   );

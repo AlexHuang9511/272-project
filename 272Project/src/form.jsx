@@ -9,7 +9,7 @@ class Report {
     emergencyInfo,
     location,
     pictureLink = "",
-    comments = "",
+    comments = ""
   ) {
     this.name = name;
     this.phone = phone;
@@ -18,6 +18,11 @@ class Report {
     this.pictureLink = pictureLink;
     this.comments = comments;
     this.status = "OPEN";
+    this.time = new Date().toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
   }
 }
 
@@ -54,7 +59,7 @@ function ReportForm({ addReport }) {
       formData.emergencyInfo,
       formData.location,
       formData.pictureLink,
-      formData.comments,
+      formData.comments
     );
 
     const existingReports = JSON.parse(localStorage.getItem("reports")) || [];
