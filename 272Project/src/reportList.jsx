@@ -1,10 +1,12 @@
 //import React, { useEffect, useState } from "react";
 
-function ReportList({ reports }) {
+function ReportList({ reports, onDelete, onChangeStatus}) {
   return (
-    <div>
+    <div className="ReportListCenter">
       <h2>Report List</h2>
-      {reports.length === 0 ? <p>No reports available.</p> : (
+      {reports.length === 0 ? (
+        <p>No reports available.</p>
+      ) : (
         <ul>
           {reports.map((report, index) => (
             <li key={index}>
@@ -36,8 +38,12 @@ function ReportList({ reports }) {
                 </p>
               )}
               <p>
-                <strong>Status:</strong> {report.status}
+                <strong>Status:</strong> {report.status} {" "}
+                <a onClick={(event)=>{
+                  event.preventDefault();
+                  onChangeStatus(index);}}>Change</a>
               </p>
+              <button onClick={() => onDelete(index)}>Delete</button>
             </li>
           ))}
         </ul>
