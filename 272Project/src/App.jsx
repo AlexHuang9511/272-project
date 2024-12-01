@@ -57,7 +57,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="component-container">
       <Header/>
       <h1>Emergency Report System</h1>
       <Form addReport={addReport} />
