@@ -39,9 +39,10 @@ const Map = ({ reports }) => {
     }).addTo(map);
 
     const addMarkersForReports = async () => {
+      console.log("Markers:", markersRef.current.reportMarkers);
       markersRef.current.reportMarkers.forEach((marker) => {
-        const markerData = marker.data;
-        if (!reports.find((report) => report.name === markerData.name)) {
+        const markerData = marker;
+        if (!reports.find((report) => report.name === markerData.options.title)) {
           marker.remove();
         }
       });
@@ -77,8 +78,10 @@ const Map = ({ reports }) => {
             newMarker.on("mouseout", function () {
               newMarker.closePopup();
             });
-
+            // Add to option title: name
+            newMarker.title = name;
             markersRef.current.reportMarkers.push(newMarker);
+            console.log("Markers loop:", markersRef.current.reportMarkers);
           }
         }
       }
