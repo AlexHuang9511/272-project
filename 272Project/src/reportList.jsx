@@ -1,4 +1,5 @@
 //import React, { useEffect, useState } from "react";
+import "./reportList.css";
 
 function ReportList({ reports, onDelete, onChangeStatus}) {
   return (
@@ -7,46 +8,66 @@ function ReportList({ reports, onDelete, onChangeStatus}) {
       {reports.length === 0 ? (
         <p>No reports available.</p>
       ) : (
-        <ul>
+        <table>
           {reports.map((report, index) => (
-            <li key={index}>
-              <h3>{report.name}</h3>
-              <p>
-                <strong>Phone:</strong> {report.phone}
-              </p>
-              <p>
-                <strong>Emergency Info:</strong> {report.emergencyInfo}
-              </p>
-              <p>
-                <strong>Location:</strong> {report.location}
-              </p>
+            <tr key={index}>
+              <td>{report.name}</td>
+              <td>
+                {report.phone}
+              </td>
+              <td>
+                {report.emergencyInfo}
+              </td>
+              <td>
+                {report.location}
+              </td>
+
+              {/* If picture link exists */}
               {report.pictureLink && (
-                <p>
-                  <strong>Picture Link:</strong>{" "}
-                  <a
-                    href={report.pictureLink}
+                <td>
+                  
+                  <img
+                    className="report-image"
+                    src={report.pictureLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                  >
-                    {report.pictureLink}
-                  </a>
-                </p>
+                  />
+                </td>
               )}
+
+              {/* If picture link doesn't exist */}
+              {!report.pictureLink && (
+                <td className="not-provided">
+                  <em>No picture provided</em>
+                </td>
+              )}
+
+              {/* If comment exists */}
               {report.comments && (
-                <p>
-                  <strong>Comments:</strong> {report.comments}
-                </p>
+                <td>
+                  {report.comments}
+                </td>
               )}
-              <p>
-                <strong>Status:</strong> {report.status} {" "}
+
+              {/* If comment does not exist */}
+              {!report.comments && (
+                <td className="not-provided">
+                  <em>No comments provided</em>
+                </td>
+              )}
+              <td>
+                {report.status} {" "}
                 <a onClick={(event)=>{
                   event.preventDefault();
+                  console.log(index);
                   onChangeStatus(index);}}>Change</a>
-              </p>
-              <button onClick={() => onDelete(index)}>Delete</button>
-            </li>
+              </td>
+              <td onClick={() => onDelete(index)}>
+                X
+              </td>
+            </tr>
           ))}
-        </ul>
+        </table>
       )}
     </div>
   );

@@ -1,0 +1,50 @@
+table {
+    border-collapse: separate;
+    border-spacing: 0px 10px;
+}
+
+td{
+    background-color: gray;
+    width: 7vw;
+    height: 70px;
+    max-width: 10vw;
+    overflow: hidden;
+    padding: 10px;
+    border: solid 1px #000;
+    border-style: none solid solid none;
+    padding: 10px;
+    /* border-top-style: solid; */
+}
+
+td:nth-child(even) {
+    background-color: darkgray; 
+}
+
+tr {
+    border-radius: 10px;
+}
+
+td:first-child {
+    border-top-left-radius: 10px; 
+    border-left-style: solid; 
+    border-bottom-left-radius: 10px; 
+}
+
+td:last-child { 
+    background-color: #ff4d4d;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px; 
+    width: 2vw;
+}
+
+td:last-child:hover {
+    cursor: pointer;
+}
+
+.not-provided {
+    color: lightgray;
+}
+
+.report-image {
+    width: 6.5vw;
+}
