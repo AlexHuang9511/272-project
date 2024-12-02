@@ -44,12 +44,12 @@ function App() {
     const getReports = [...reports];
     getReports.forEach((search, index) => {
       if (report.name === search.name && report.time === search.time) {
-        if (getReports[index].status == "OPEN") {
+        if (report.status == "OPEN") {
           const password = window.prompt(
             "Enter the password to change Status of report to RESOLVED:",
           );
           if (password && md5(password).toString() === PASSWORD_HASH) {
-            getReports[index].status = "RESOLVED";
+            report.status = "RESOLVED";
             saveReports(getReports);
             alert("Report status successfully changed to resolved.");
           } else {
@@ -80,4 +80,3 @@ function App() {
 }
 
 export default App;
-
