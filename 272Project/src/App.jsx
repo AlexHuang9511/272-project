@@ -3,7 +3,7 @@ import Form from "./form.jsx";
 import ReportList from "./reportList.jsx";
 import "./App.css";
 import Map from "./map.jsx";
-import Header from "./Header.jsx"
+import Header from "./Header.jsx";
 import md5 from "crypto-js/md5";
 
 function App() {
@@ -40,32 +40,44 @@ function App() {
   };
 
   // Edit status with password verification
-  const changeReportStatus = (index) => {
+  const changeReportStatus = (report) => {
     const getReports = [...reports];
-    if(getReports[index].status == "OPEN"){
-        const password = window.prompt("Enter the password to change Status of report to RESOLVED:");
-      if (password && md5(password).toString() === PASSWORD_HASH) {
-        getReports[index].status = "RESOLVED";
-        saveReports(getReports)
-        alert("Report status successfully changed to resolved.");
-      } else {
-        alert("Incorrect password. Change in status canceled.");
+    getReports.forEach((search, index) => {
+      if (report.name === search.name && report.time === search.time) {
+        if (getReports[index].status == "OPEN") {
+          const password = window.prompt(
+            "Enter the password to change Status of report to RESOLVED:",
+          );
+          if (password && md5(password).toString() === PASSWORD_HASH) {
+            getReports[index].status = "RESOLVED";
+            saveReports(getReports);
+            alert("Report status successfully changed to resolved.");
+          } else {
+            alert("Incorrect password. Change in status canceled.");
+          }
+        } else {
+          const password = window.alert(
+            "This report is resolved and cannot be re-opened.\nPlease submit a new report.",
+          );
+        }
       }
-    }
-    else{
-      const password = window.alert("This report is resolved and cannot be re-opened.\nPlease submit a new report.");
-    }
+    });
   };
 
   return (
     <div className="component-container">
-      <Header/>
+      <Header />
       <h1>Emergency Report System</h1>
       <Form addReport={addReport} />
-      <Map reports={reports} setReportsInMap = {setReportsInMap}/>
-      <ReportList reports={reportFromMap} onDelete={deleteReport} onChangeStatus={changeReportStatus} />
+      <Map reports={reports} setReportsInMap={setReportsInMap} />
+      <ReportList
+        reports={reportFromMap}
+        onDelete={deleteReport}
+        onChangeStatus={changeReportStatus}
+      />
     </div>
   );
 }
 
 export default App;
+
