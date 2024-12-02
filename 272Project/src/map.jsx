@@ -53,7 +53,6 @@ const Map = ({ reports, setReportsInMap }) => {
       if (!Array.isArray(reports)) return;
 
       for (let report of reports) {
-        if (report.status === "OPEN") {
           const { location, name, status, emergencyInfo, time } = report;
           const coordinates = await geocodeAddress(location);
 
@@ -84,7 +83,6 @@ const Map = ({ reports, setReportsInMap }) => {
 
             tempReports.push(report);
           }
-        }
       }
       // Filter visible reports
       const bounds = map.getBounds();
