@@ -7,3 +7,5 @@ Gabriel Cheng 301305668 - 20%
 Matthew Santiago 301555709 - 20%
 
 Forest Wang 301466809 - 20%
+
+Adam Abdi  301431914 - 20%
