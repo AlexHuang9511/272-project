@@ -64,7 +64,7 @@ function ReportList({ reports, onDelete, onChangeStatus }) {
                   Change
                 </a>
               </td>
-              <td onClick={() => onDelete(index)}>
+              <td onClick={() => onDelete(report)}>
                 X
               </td>
             </tr>

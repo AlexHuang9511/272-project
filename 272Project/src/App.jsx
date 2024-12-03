@@ -29,14 +29,20 @@ function App() {
   };
 
   // Delete a report with password verification
-  const deleteReport = (index) => {
+  const deleteReport = (report) => {
     const password = window.prompt("Enter the password to delete this report:");
-    if (password && md5(password).toString() === PASSWORD_HASH) {
-      saveReports(reports.filter((_, idx) => idx !== index));
-      alert("Report deleted successfully.");
-    } else {
-      alert("Incorrect password. Deletion canceled.");
-    }
+
+    const getReports = [...reports];
+    getReports.forEach((search, index) => {
+      if (report.name === search.name && report.time === search.time) {
+        if (password && md5(password).toString() === PASSWORD_HASH) {
+          saveReports(reports.filter((_, idx) => idx !== index));
+          alert("Report deleted successfully.");
+        } else {
+          alert("Incorrect password. Deletion canceled.");
+        }
+      }
+    });
   };
 
   // Edit status with password verification
