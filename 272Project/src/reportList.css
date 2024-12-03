@@ -41,6 +41,10 @@ td:last-child:hover {
     cursor: pointer;
 }
 
+tr:hover {
+    cursor: pointer;
+}
+
 .not-provided {
     color: lightgray;
 }
@@ -48,3 +52,61 @@ td:last-child:hover {
 .report-image {
     width: 6.5vw;
 }
+
+#report-details {
+    display: none;
+    position: fixed;
+    background-color: white;
+    width: 40vw;
+    height: fit-content;
+    padding: 20px;
+    border-radius: 10px;
+    top: 10%;
+    left: calc(50% - (40vw / 2));
+    z-index: 4;
+    color: black;
+    flex-flow: column wrap;
+    align-items: baseline;
+    justify-content: start;
+    text-align: left;
+    overflow: hidden;
+}
+
+#report-details > p {
+    width: 35vw;
+    margin: 5px;
+    margin-left: 3vw;
+}
+
+#details-backing {
+    position: fixed;
+    background-color: black;
+    height: 100vh;
+    width: 100vw;
+    top: 0px;
+    left: 0px;
+    z-index: 3;
+    opacity: 50%;
+    display: none;
+}
+
+#report-details-image {
+    height: 30vh;
+    align-self: center;
+}
+
+#report-status {
+    align-self: center;
+    text-align: center;
+    font-weight: bold;
+    color: rgb(70,70,70);
+}
+
+em {
+    display: inline;
+    color: rgb(99, 99, 99);
+}
+
+
+
+
