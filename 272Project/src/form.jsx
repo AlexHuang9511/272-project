@@ -9,7 +9,7 @@ class Report {
     emergencyInfo,
     location,
     pictureLink = "",
-    comments = ""
+    comments = "",
   ) {
     this.name = name;
     this.phone = phone;
@@ -18,6 +18,7 @@ class Report {
     this.pictureLink = pictureLink;
     this.comments = comments;
     this.status = "OPEN";
+    this.date = new Date().getDate();
     this.time = new Date().toLocaleTimeString("en-US", {
       hour: "2-digit",
       minute: "2-digit",
@@ -59,7 +60,7 @@ function ReportForm({ addReport }) {
       formData.emergencyInfo,
       formData.location,
       formData.pictureLink,
-      formData.comments
+      formData.comments,
     );
 
     const existingReports = JSON.parse(localStorage.getItem("reports")) || [];
@@ -101,7 +102,7 @@ function ReportForm({ addReport }) {
                   placeholder="Full name"
                   required
                 />
-                <label htmlFor="name">Name </label>
+                <label htmlFor="name">Name</label>
               </div>
               <div>
                 <input
@@ -113,7 +114,7 @@ function ReportForm({ addReport }) {
                   placeholder="Phone"
                   required
                 />
-                <label htmlFor="phone">Phone Number </label>
+                <label htmlFor="phone">Phone Number</label>
               </div>
               <div>
                 <input
@@ -124,7 +125,9 @@ function ReportForm({ addReport }) {
                   placeholder="Emergency info"
                   required
                 />
-                <label className="textarea-placeholder" htmlFor="emergencyInfo">Emergency Info </label>
+                <label className="textarea-placeholder" htmlFor="emergencyInfo">
+                  Emergency Info
+                </label>
               </div>
               <div>
                 <input
@@ -136,7 +139,7 @@ function ReportForm({ addReport }) {
                   placeholder="Location of incident"
                   required
                 />
-                <label htmlFor="location">Location </label>
+                <label htmlFor="location">Location</label>
               </div>
               <div>
                 <input
@@ -147,7 +150,7 @@ function ReportForm({ addReport }) {
                   placeholder="Picture link (optional)"
                   onChange={handleChange}
                 />
-                <label htmlFor="pictureLink">Picture Link (optional) </label>
+                <label htmlFor="pictureLink">Picture Link (optional)</label>
               </div>
               <div>
                 <input
@@ -157,10 +160,18 @@ function ReportForm({ addReport }) {
                   onChange={handleChange}
                   placeholder="Comments (optional)"
                 />
-                <label className="textarea-placeholder" htmlFor="comments">Comments (optional) </label>
+                <label className="textarea-placeholder" htmlFor="comments">
+                  Comments (optional)
+                </label>
               </div>
-              <button className="formbutton submit" type="submit">Submit</button>
-              <button className="formbutton cancel" type="button" onClick={() => setIsModalOpen(false)}>
+              <button className="formbutton submit" type="submit">
+                Submit
+              </button>
+              <button
+                className="formbutton cancel"
+                type="button"
+                onClick={() => setIsModalOpen(false)}
+              >
                 Cancel
               </button>
             </form>
