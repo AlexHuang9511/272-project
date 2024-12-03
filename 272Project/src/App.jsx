@@ -34,7 +34,14 @@ function App() {
 
     const getReports = [...reports];
     getReports.forEach((search, index) => {
-      if (report.name === search.name && report.time === search.time) {
+      if (report.name === search.name && 
+        report.time === search.time &&
+        report.phone === search.phone &&
+        report.emergencyInfo === search.emergencyInfo &&
+        report.location === search.location &&
+        report.pictureLink === search.pictureLink &&
+        report.comments === search.comments
+      ) {
         if (password && md5(password).toString() === PASSWORD_HASH) {
           saveReports(reports.filter((_, idx) => idx !== index));
           alert("Report deleted successfully.");
@@ -49,7 +56,14 @@ function App() {
   const changeReportStatus = (report) => {
     const getReports = [...reports];
     getReports.forEach((search, index) => {
-      if (report.name === search.name && report.time === search.time) {
+      if (report.name === search.name && 
+        report.time === search.time &&
+        report.phone === search.phone &&
+        report.emergencyInfo === search.emergencyInfo &&
+        report.location === search.location &&
+        report.pictureLink === search.pictureLink &&
+        report.comments === search.comments
+      ) {
         if (report.status == "OPEN") {
           const password = window.prompt(
             "Enter the password to change Status of report to RESOLVED:",
