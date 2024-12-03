@@ -114,7 +114,15 @@ const Map = ({ reports, setReportsInMap }) => {
 
       // Go through markers again
       const reportsCurrentlyVisible = tempReports.filter((report) => {
-        const validMarker = markersRef.current.reportMarkers.find((marker)=> marker.data.name === report.name);
+        const validMarker = markersRef.current.reportMarkers.find((marker)=> 
+          marker.data.name === report.name &&
+          marker.data.time === report.time &&
+          marker.data.phone === report.phone &&
+          marker.data.emergencyInfo === report.emergencyInfo &&
+          marker.data.location === report.location &&
+          marker.data.pictureLink === report.pictureLink &&
+          marker.data.comments === report.comments
+      );
         // returns boolean for the report filter
         console.log("valid marker: ", validMarker)
         if (validMarker){
