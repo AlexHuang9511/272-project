@@ -18,6 +18,8 @@ class Report {
     this.pictureLink = pictureLink;
     this.comments = comments;
     this.status = "OPEN";
+    this.month = new Date().getMonth() + 1;
+    this.year = new Date().getFullYear();
     this.date = new Date().getDate();
     this.time = new Date().toLocaleTimeString("en-US", {
       hour: "2-digit",

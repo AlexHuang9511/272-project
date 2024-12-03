@@ -135,7 +135,7 @@ function openReportDetails(report){
 
 
   const reportDateTime = document.querySelector("#report-date-time");
-  reportDateTime.innerHTML = report.time;
+  reportDateTime.innerHTML = report.year + "-" + report.month + "-" + report.date + " (" + report.time + ")";
 
   const reportStatus = document.querySelector("#report-status");
   reportStatus.innerHTML = report.status;
