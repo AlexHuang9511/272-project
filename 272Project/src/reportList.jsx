@@ -1,7 +1,40 @@
-//import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./reportList.css";
 
-function ReportList({ reports, onDelete, onChangeStatus }) {
+function ReportList({ reports, onDelete, onChangeStatus, markers, setHighlight, mapReset, mapHasReset}) {
+  const [alreadyHighlighted, setAlreadyHighlighted] = useState(null);
+  function setClickedReport(clickedReport){
+    console.log("MARKERS ", markers);
+    console.log("ALREADY", alreadyHighlighted);
+    // highlighted marker already
+    if(alreadyHighlighted){
+      alreadyHighlighted._icon.style.filter = "hue-rotate(0deg)";
+    }
+    if(clickedReport){
+      console.log("I CLICKED THIS", clickedReport);
+      const highlightMarker = markers.find((marker)=> 
+            marker.data.name === clickedReport.name &&
+            marker.data.time === clickedReport.time &&
+            marker.data.phone === clickedReport.phone &&
+            marker.data.emergencyInfo === clickedReport.emergencyInfo &&
+            marker.data.location === clickedReport.location &&
+            marker.data.pictureLink === clickedReport.pictureLink &&
+            marker.data.comments === clickedReport.comments);
+      highlightMarker.openPopup();
+      highlightMarker._icon.style.filter = "hue-rotate(-120deg)";
+      setHighlight(highlightMarker);
+      console.log("SET HIGHLIGHT", highlightMarker);
+      setAlreadyHighlighted(highlightMarker);
+    }
+  }
+
+  useEffect(()=>{
+    if(mapReset){
+      mapHasReset(false);
+      setAlreadyHighlighted(null);
+    }
+  }, [mapReset]);
+
   return (
     <div className="ReportListCenter">
       <h2>Report List</h2>
@@ -30,20 +63,20 @@ function ReportList({ reports, onDelete, onChangeStatus }) {
           <tbody>
             {reports.map((report, index) => (
               <tr key={index}>
-                <td onClick={() => openReportDetails(report)}>{report.name}</td>
-                <td onClick={() => openReportDetails(report)}>
+                <td onClick={() => {openReportDetails(report); setClickedReport(report);}}>{report.name}</td>
+                <td onClick={() => {openReportDetails(report); setClickedReport(report);}}>
                   {report.phone}
                 </td>
-                <td onClick={() => openReportDetails(report)}>
+                <td onClick={() => {openReportDetails(report); setClickedReport(report);}}>
                   {report.emergencyInfo}
                 </td>
-                <td onClick={() => openReportDetails(report)}>
+                <td onClick={() => {openReportDetails(report); setClickedReport(report);}}>
                   {report.location}
                 </td>
 
                 {/* If picture link exists */}
                 {report.pictureLink && (
-                  <td onClick={() => openReportDetails(report)}>
+                  <td onClick={() => {openReportDetails(report); setClickedReport(report);}}>
                     <img
                       className="report-image"
                       src={report.pictureLink}
@@ -55,25 +88,25 @@ function ReportList({ reports, onDelete, onChangeStatus }) {
 
                 {/* If picture link doesn't exist */}
                 {!report.pictureLink && (
-                  <td className="not-provided" onClick={() => openReportDetails(report)}>
+                  <td className="not-provided" onClick={() => {openReportDetails(report); setClickedReport(report);}}>
                     <em>No picture provided</em>
                   </td>
                 )}
 
                 {/* If comment exists */}
                 {report.comments && (
-                  <td onClick={() => openReportDetails(report)}>
+                  <td onClick={() => {openReportDetails(report); setClickedReport(report);}}>
                     {report.comments}
                   </td>
                 )}
 
                 {/* If comment does not exist */}
                 {!report.comments && (
-                  <td className="not-provided" onClick={() => openReportDetails(report)}>
+                  <td className="not-provided" onClick={() => {openReportDetails(report); setClickedReport(report);}}>
                     <em>No comments provided</em>
                   </td>
                 )}
-                <td onClick={() => openReportDetails(report)}>
+                <td onClick={() => {openReportDetails(report); setClickedReport(report);}}>
                   {report.status}{"  "}
                   <a
                     onClick={(event) => {

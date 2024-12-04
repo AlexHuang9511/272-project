@@ -3,7 +3,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "./map.css"; // Import the CSS file
 
-const Map = ({ reports, setReportsInMap }) => {
+const Map = ({ reports, setReportsInMap, setMarkers, mapHasReset}) => {
   const [clickedLocation, setClickedLocation] = useState(null);
   const [shortAddress, setShortAddress] = useState("");
   const markersRef = useRef({
@@ -32,10 +32,12 @@ const Map = ({ reports, setReportsInMap }) => {
     }
   };
 
-  useEffect(() => {
-    const map = L.map("map").setView([49.2827, -123.1207], 13);
 
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  useEffect(() => {
+    // Map reset
+    mapHasReset(true);
+    const map = L.map("map").setView([49.2827, -123.1207], 13);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "&copy; OpenStreetMap",
     }).addTo(map);
 
@@ -77,7 +79,7 @@ const Map = ({ reports, setReportsInMap }) => {
             newMarker.on("mouseout", function () {
               newMarker.closePopup();
             });
-            // Add to option title: name
+            // Add to data
             newMarker.data = report;
             markersRef.current.reportMarkers.push(newMarker);
 
@@ -104,6 +106,8 @@ const Map = ({ reports, setReportsInMap }) => {
       console.log("REPORTS VISIBLE:", reportsCurrentlyVisible)
       // Prop
       setReportsInMap(reportsCurrentlyVisible);
+      // Pass markers to App
+      setMarkers(markersRef.current.reportMarkers);
     };
 
     addMarkersForReports();
@@ -175,12 +179,20 @@ const Map = ({ reports, setReportsInMap }) => {
         .openPopup();
 
       markersRef.current.regularMarkers.push(newMarker);
+
+      // Find and change highlighted marker
+      const highlighted = markersRef.current.reportMarkers.find((marker) => marker._icon.style.filter == "hue-rotate(-120deg)");
+      if(highlighted){
+        highlighted._icon.style.filter = "hue-rotate(0deg)";
+      }
+
     });
 
     return () => {
       map.remove();
     };
   }, [reports]);
+
 
   return <div id='map' className='map'></div>;
 };

@@ -10,6 +10,9 @@ function App() {
   const PASSWORD_HASH = md5("1234").toString(); // Predefined hashed password
   const [reports, setReports] = useState([]);
   const [reportFromMap, setReportsInMap] = useState([]);
+  const [markers, setMarkers] = useState([]);
+  const [highlight, setHighlight] = useState(null);
+  const [mapReset, mapHasReset] = useState(false);
 
   // Load saved reports from localStorage when the app initializes
   useEffect(() => {
@@ -84,16 +87,24 @@ function App() {
     });
   };
 
+  useEffect(() => {
+    console.log("APP HIGHLIGHT ", highlight);
+  }, [highlight]);
+
   return (
     <div className="component-container">
       <Header />
       <h1>Emergency Report System</h1>
       <Form addReport={addReport} />
-      <Map reports={reports} setReportsInMap={setReportsInMap} />
+      <Map reports={reports} setReportsInMap={setReportsInMap} setMarkers={setMarkers} mapHasReset={mapHasReset}/>
       <ReportList
         reports={reportFromMap}
         onDelete={deleteReport}
         onChangeStatus={changeReportStatus}
+        markers = {markers}
+        setHighlight = {setHighlight}
+        mapReset = {mapReset}
+        mapHasReset = {mapHasReset}
       />
     </div>
   );
